@@ -16,11 +16,11 @@ type UserHandler struct {
 	DB *sql.DB
 }
 
-func (db UserHandler) GetMenu() {
+func (db UserHandler) GetMenu(customerID int) {
 	var (
-		id    int
-		name  string
-		price float64
+		id      int
+		name    string
+		price   float64
 		alcohol bool
 	)
 	rows, err := db.DB.Query(`
@@ -48,58 +48,74 @@ func (db UserHandler) Register(email, password string) error {
 	if rows.Next() {
 		return errors.New("Email already exist")
 	}
-	hashedPass, err:= bcrypt.GenerateFromPassword([]byte(password), 4)
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(password), 4)
 	if err != nil {
 		return err
 	}
 	_, err = db.DB.Exec(`
 	INSERT INTO Customers (email, password)
 	VALUES (?, ?);
-	`, email, hashedPass)
+	`, email, string(hashedPass))
 	if err != nil {
 		return err
 	}
+	// Get ID
+	var customerID int
+	row := db.DB.QueryRow(`
+	SELECT id FROM Customer WHERE email = ?
+	`, email)
+	err = row.Scan(&customerID)
+	if err != nil {
+		return err
+	}
+	db.DB.Exec(`
+	INSERT INTO CustomerDetails (name, age, phone, customerID)
+	VALUES ("", null, null, ?);
+	`, customerID)
 	return nil
 }
 
-func (db UserHandler) Login(email, password string) UserInfo, error {
-	var hashedPass []byte
+func (db UserHandler) Login(email, password string) (int, error) {
+	var (
+		id         int
+		hashedPass []byte
+	)
 	row := db.DB.QueryRow(`
-	SELECT password FROM Customer WHERE email = ?
+	SELECT id, password FROM Customer WHERE email = ?
 	`, email)
-	err := row.Scan(&hashedPass)
+	err := row.Scan(&id, &hashedPass)
 	if err != nil {
-		return err
+		return -1, err
 	}
 	err = bcrypt.CompareHashAndPassword(hashedPass, []byte(password))
 	if err != nil {
-		return err
+		return -1, err
 	}
-	return nil
+	return id, nil
 }
 
-func (db UserHandler) CreateDetails() {
-	// rows, err := db.DB.Query(`
-	// SELECT 1 FROM Customers WHERE email = ?;
-	// `, email)
-	// if err != nil {
-	// 	return err
-	// }
-	if rows.Next() {
-		return errors.New("Email already exist")
+func (db UserHandler) CreateDetails(name string, age int, phone int, customerID int) error {
+	rows, err := db.DB.Query(`
+	SELECT 1 FROM Customers WHERE id = ?;
+	`, customerID)
+	if err != nil {
+		return err
+	}
+	if !rows.Next() {
+		return errors.New("Customer doesn't exist!")
 	}
 	db.DB.Exec(`
-	INSERT INTO Customer (email, password)
-	VALUES (?, ?);
-	`)
+	INSERT INTO CustomerDetails (name, age, phone, customerID)
+	VALUES (?, ?, ?, ?);
+	`, name, age, phone, customerID)
 
 	return nil
 }
 
 func (db UserHandler) UpdateDetails() {
-
+	// update
 }
 
 func (db UserHandler) DeleteDetails() {
-
+	// delete
 }
