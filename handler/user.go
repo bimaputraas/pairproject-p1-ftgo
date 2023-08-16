@@ -119,3 +119,29 @@ func (h *Handler) UpdateCustomersDetails(name string, age int,phone string,custo
 	// debug
 	fmt.Println("Customers detail updated")
 }
+
+// view customers details
+func (h *Handler) ViewCustomersDetails(customer_id int) (*entity.Customers_details,error) {
+	ctx := context.Background()
+	query := `SELECT name,age,phone FROM customers_details WHERE customer_id = ?`
+
+	rows,err := h.UserHandler.QueryContext(ctx,query,customer_id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	
+	var customer_details entity.Customers_details
+	if rows.Next(){
+		err := rows.Scan(&customer_details.Name,&customer_details.Age,&customer_details.Phone)
+		if err != nil {
+			return nil, errors.New("Data is not available, please update your data")
+		}
+		// debug
+		fmt.Println("Customers info success")
+
+	}
+	return &customer_details,nil
+	
+	// debug
+}
