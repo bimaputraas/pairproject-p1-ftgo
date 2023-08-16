@@ -6,7 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"m_p1/entity"
+
+	"github.com/bimaxputra/pairproject-p1-ftgo/entity"
 
 	"golang.org/x/crypto/bcrypt"
 )

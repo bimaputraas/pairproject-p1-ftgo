@@ -1,9 +1,9 @@
 package main
 
 import (
-	"m_p1/cli"
-	"m_p1/config"
-	"m_p1/handler"
+	"github.com/bimaxputra/pairproject-p1-ftgo/cli"
+	"github.com/bimaxputra/pairproject-p1-ftgo/config"
+	"github.com/bimaxputra/pairproject-p1-ftgo/handler"
 )
 
 func main() {

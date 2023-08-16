@@ -1,4 +1,4 @@
-module m_p1
+module github.com/bimaxputra/pairproject-p1-ftgo
 
 go 1.20
 
