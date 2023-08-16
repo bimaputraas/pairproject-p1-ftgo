@@ -8,10 +8,10 @@ password VARCHAR(255)
 
 CREATE TABLE customers_details(
 id INT UNIQUE AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(255),
-age INT,
-phone INT,
-customer_id INT,
+name VARCHAR(255) DEFAULT NULL,
+age INT DEFAULT NULL,
+phone VARCHAR(255) DEFAULT NULL,
+customer_id INT UNIQUE,
 FOREIGN KEY (customer_id) REFERENCES customers(id)
 );
 
