@@ -2,7 +2,8 @@ package cli
 
 import (
 	"fmt"
-	"m_p1/handler"
+
+	"github.com/bimaxputra/pairproject-p1-ftgo/handler"
 )
 
 type Cli struct {
