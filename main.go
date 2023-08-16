@@ -1,8 +1,17 @@
 package main
 
-import "github.com/bimaxputra/pairproject-p1-ftgo/cli"
+import (
+	"m_p1/cli"
+	"m_p1/config"
+	"m_p1/handler"
+)
 
 func main() {
-	cli.MainMenu()
-	// perubahan 1 oleh bima
+	db := config.ConnectDb()
+	defer db.Close()
+
+	userHandler := handler.Handler{UserHandler: db}
+	
+	app := cli.Cli{Handler: &userHandler}
+	app.MainGateInterface()
 }
