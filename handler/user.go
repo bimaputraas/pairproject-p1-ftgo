@@ -144,3 +144,20 @@ func (h *Handler) ViewCustomersDetails(customer_id int) (*entity.Customers_detai
 
 	// debug
 }
+
+// view menu
+func (h *Handler) ViewBeverages() (map[int]entity.Beverages, error) {
+	ctx := context.Background()
+	query := `SELECT id,name,price,contains_alcohol FROM beverages`
+	rows, err := h.UserHandler.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	beverages := make(map[int]entity.Beverages)
+	for rows.Next() {
+		var bev entity.Beverages
+		rows.Scan(&bev.Id, &bev.Name, &bev.Price, &bev.Alcohol)
+		beverages[bev.Id] = bev
+	}
+	return beverages, nil
+}
