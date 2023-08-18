@@ -66,7 +66,7 @@ func (cli *Cli) LoginInterface() {
 	askInputPassword := ScanInputString()
 
 	// login by admin
-	if askInputEmail == "admin" && askInputPassword == "admin"{
+	if askInputEmail == "admin" && askInputPassword == "admin" {
 		cli.MainMenuAdmin()
 	}
 
@@ -219,7 +219,7 @@ func (cli *Cli) OrderInterface(customerId int) {
 			// print bev with string padding
 			if bev.Alcohol && isAdult {
 				fmt.Printf("%-3s %-20s %.2f Alcoholic\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
-			} else {
+			} else if !bev.Alcohol {
 				fmt.Printf("%-3s %-20s %.2f\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
 			}
 		}
