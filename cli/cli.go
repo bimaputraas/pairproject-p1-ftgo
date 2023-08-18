@@ -233,7 +233,7 @@ func (cli *Cli) OrderInterface(customerId int) {
 		//if drink not found or trying to buy alcohol while underage
 		bev, ok := menu[bevId]
 		if !ok || (bev.Alcohol && !isAdult) {
-			fmt.Println("You are not old enough to purchase this beverage.")
+			fmt.Println("Beverage not found")
 			continue
 		}
 		fmt.Println("How many would you like to buy?")
