@@ -171,11 +171,13 @@ func (cli *Cli) OrderInterface(customerId int) {
 	//create order item and get the id
 	_, err := cli.Handler.UserHandler.ExecContext(ctx, "INSERT INTO orders (customer_id) VALUES (?);", customerId)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		cli.MainMenuInterface(customerId)
 	}
 	rows, err := cli.Handler.UserHandler.QueryContext(ctx, "SELECT id FROM orders WHERE customer_id = ? ORDER BY id DESC", customerId)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		cli.MainMenuInterface(customerId)
 	}
 	rows.Next()
 	var orderId int
@@ -189,13 +191,15 @@ func (cli *Cli) OrderInterface(customerId int) {
 	//get menu
 	menu, err := cli.Handler.ViewBeverages()
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		cli.MainMenuInterface(customerId)
 	}
 
 	//init bool for is customer of age
 	customer_details, err := cli.Handler.ViewCustomersDetails(customerId)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		cli.MainMenuInterface(customerId)
 	}
 	var isAdult bool = false
 	if customer_details.Age >= 21 {
