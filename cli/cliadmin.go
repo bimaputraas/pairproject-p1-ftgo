@@ -43,7 +43,7 @@ func (cli *Cli) ViewBeveragesAdminInterface() {
 	println("ID  Name                 Price       Alcohol")
 	for _, bev := range menu {
 		// print bev with string padding
-		fmt.Printf("%-3s %-20s %-7s %s\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price), fmt.Sprint(bev.Alcohol))
+		fmt.Printf("%-3s %-20s %-7s 	%s\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price), fmt.Sprint(bev.Alcohol))
 	}
 
 	fmt.Println("")
