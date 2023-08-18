@@ -40,11 +40,11 @@ func (cli *Cli) ViewBeveragesAdminInterface() {
 		panic(err)
 	}
 	// print menu
-	println("ID  Name                Price	Alcohol")
-		for _, bev := range menu {
-			// print bev with string padding
-				fmt.Printf("%-3s %-20s %.2f %s\n", fmt.Sprint(bev.Id), bev.Name, bev.Price,fmt.Sprint(bev.Alcohol))
-		}
+	println("ID  Name                 Price       Alcohol")
+	for _, bev := range menu {
+		// print bev with string padding
+		fmt.Printf("%-3s %-20s %-7s %s\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price), fmt.Sprint(bev.Alcohol))
+	}
 
 	fmt.Println("")
 	cli.MainMenuAdmin()
@@ -58,7 +58,7 @@ func (cli *Cli) AddBeverageInterface() {
 
 	fmt.Printf("\nPlease input beverage price: ")
 	askPriceStr := ScanInputString()
-	askPrice,err := strconv.ParseFloat(askPriceStr, 64)
+	askPrice, err := strconv.ParseFloat(askPriceStr, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -67,16 +67,16 @@ func (cli *Cli) AddBeverageInterface() {
 	askAlcohol := ScanInputString()
 
 	var isContainsAlcohol bool
-	switch askAlcohol{
+	switch askAlcohol {
 	case "yes":
-		isContainsAlcohol =  true
+		isContainsAlcohol = true
 	case "no":
 		isContainsAlcohol = false
 	default:
 		isContainsAlcohol = false
 	}
 
-	cli.Handler.AddBeverage(askName,askPrice,isContainsAlcohol)
+	cli.Handler.AddBeverage(askName, askPrice, isContainsAlcohol)
 	fmt.Println("Beverage added to menu")
 	cli.MainMenuAdmin()
 }
@@ -87,13 +87,12 @@ func (cli *Cli) DeleteBeverageInterface() {
 	// ask id
 	fmt.Printf("\nPlease input beverage id: ")
 	askIdStr := ScanInputString()
-	askId,err := strconv.Atoi(askIdStr)
+	askId, err := strconv.Atoi(askIdStr)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-
 	cli.Handler.DeleteBeveragebyId(askId)
-	fmt.Println("Beverage deleted",)
+	fmt.Println("Beverage deleted")
 	cli.MainMenuAdmin()
 }

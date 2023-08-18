@@ -214,13 +214,13 @@ func (cli *Cli) OrderInterface(customerId int) {
 	}
 	for {
 		//show menu
-		println("ID  Name                Price")
+		fmt.Println("ID  Name                Price")
 		for _, bev := range menu {
 			// print bev with string padding
 			if bev.Alcohol && isAdult {
-				fmt.Printf("%-3s %-20s %.2f Alcoholic\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
+				fmt.Printf("%-3s %-20s %-7s Alcoholic\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price))
 			} else if !bev.Alcohol {
-				fmt.Printf("%-3s %-20s %.2f\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
+				fmt.Printf("%-3s %-20s %-7s\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price))
 			}
 		}
 
