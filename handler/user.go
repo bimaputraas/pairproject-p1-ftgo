@@ -86,7 +86,7 @@ func (h *Handler) SelectByEmail(email string) int {
 			log.Fatal(err)
 		}
 
-		fmt.Println("Selected customer ID: ", customer_id)
+		// fmt.Println("Selected customer ID: ", customer_id)
 	}
 	return customer_id
 }
@@ -101,7 +101,7 @@ func (h *Handler) InsertDefaultCustomersDetails(customer_id int) {
 		log.Fatal(err)
 	}
 	// debug
-	fmt.Println("Customer's detail inserted successfully")
+	// fmt.Println("Customer's detail inserted successfully")
 }
 
 // AFTER LOGIN
