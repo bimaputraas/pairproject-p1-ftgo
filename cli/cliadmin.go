@@ -9,6 +9,7 @@ import (
 func (cli *Cli) MainMenuAdmin() {
 	fmt.Printf("\nADMIN MENU\n\n")
 	fmt.Println("[COMMAND]			-DESCRIPTION")
+	fmt.Println("[view]				-view beverage")
 	fmt.Println("[add]				-add beverage")
 	fmt.Println("[delete]			-delete beverage")
 	fmt.Printf("\nEnter your command : ")
@@ -16,6 +17,8 @@ func (cli *Cli) MainMenuAdmin() {
 	askAdminInput := ScanInputString()
 
 	switch askAdminInput {
+	case "view":
+		cli.ViewBeveragesAdminInterface()
 	case "add":
 		cli.AddBeverageInterface()
 	case "delete":
@@ -23,6 +26,22 @@ func (cli *Cli) MainMenuAdmin() {
 	default:
 		cli.MainMenuAdmin()
 	}
+}
+
+func (cli *Cli) ViewBeveragesAdminInterface() {
+	menu, err := cli.Handler.ViewBeverages()
+	if err != nil {
+		panic(err)
+	}
+	// print menu
+	println("ID  Name                Price	Alcohol")
+		for _, bev := range menu {
+			// print bev with string padding
+				fmt.Printf("%-3s %-20s %.2f %s\n", fmt.Sprint(bev.Id), bev.Name, bev.Price,fmt.Sprint(bev.Alcohol))
+		}
+
+	fmt.Println("")
+	cli.MainMenuAdmin()
 }
 
 func (cli *Cli) AddBeverageInterface() {
@@ -37,7 +56,6 @@ func (cli *Cli) AddBeverageInterface() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("debug, ask price = ",askPrice)
 
 	fmt.Printf("\nDoes beverage contains alcohol? (yes/no): ")
 	askAlcohol := ScanInputString()
@@ -59,16 +77,6 @@ func (cli *Cli) AddBeverageInterface() {
 
 func (cli *Cli) DeleteBeverageInterface() {
 	fmt.Printf("\n-DELETE BEVERAGE-\n\n")
-	menu, err := cli.Handler.ViewBeverages()
-	if err != nil {
-		panic(err)
-	}
-	// print menu
-	println("ID  Name                Price	Alcohol")
-		for _, bev := range menu {
-			// print bev with string padding
-				fmt.Printf("%-3s %-20s %.2f %s\n", fmt.Sprint(bev.Id), bev.Name, bev.Price,fmt.Sprint(bev.Alcohol))
-		}
 
 	// ask id
 	fmt.Printf("\nPlease input beverage id: ")
