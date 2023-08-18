@@ -236,10 +236,17 @@ func (cli *Cli) OrderInterface(customerId int) {
 			fmt.Println("Beverage not found")
 			continue
 		}
-		fmt.Println("How many would you like to buy?")
-		quantity, err := strconv.Atoi(ScanInputString())
-		if err != nil {
-			panic(err)
+		var quantity int
+		for {
+			fmt.Println("How many would you like to buy?")
+			quantity, err = strconv.Atoi(ScanInputString())
+			if err != nil {
+				panic(err)
+			}
+			if quantity > 0 {
+				break
+			}
+			fmt.Println("Invalid quantity")
 		}
 		total += bev.Price * float64(quantity)
 		fmt.Printf("Current total = $%.2f\n", total)
