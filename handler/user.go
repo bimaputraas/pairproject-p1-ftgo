@@ -17,7 +17,7 @@ type Handler struct {
 }
 
 // register
-func (h *Handler) RegisterUser(email, password string) (string,error) {
+func (h *Handler) RegisterUser(email, password string) (string, error) {
 	ctx := context.Background()
 	query := `SELECT email FROM customers WHERE email = ?;`
 
@@ -28,7 +28,7 @@ func (h *Handler) RegisterUser(email, password string) (string,error) {
 	defer rows.Close()
 	if rows.Next() {
 		// fmt.Println("Email already exists")
-		return email,errors.New("Email already exists")
+		return email, errors.New("Email already exists")
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
@@ -39,7 +39,7 @@ func (h *Handler) RegisterUser(email, password string) (string,error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return email,nil
+	return email, nil
 }
 
 // login
@@ -126,7 +126,7 @@ func (h *Handler) ViewCustomersDetails(customer_id int) (*entity.Customers_detai
 
 	rows, err := h.UserHandler.QueryContext(ctx, query, customer_id)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 	defer rows.Close()
 

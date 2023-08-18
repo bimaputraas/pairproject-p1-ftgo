@@ -27,3 +27,33 @@ func TestLoginFail(t *testing.T) {
 		t.Error("Logged in into non existant user?")
 	}
 }
+
+func TestViewDetails(t *testing.T) {
+	db := config.ConnectDb()
+	defer db.Close()
+	uh := Handler{UserHandler: db}
+	err := uh.LoginUser("test@mail.com", "test")
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = uh.ViewCustomersDetails(1)
+	if err != nil {
+		t.Error("Cannot access details for customer_id = 1")
+	}
+}
+
+func TestViewDetailsFail(t *testing.T) {
+	db := config.ConnectDb()
+	defer db.Close()
+	uh := Handler{UserHandler: db}
+	err := uh.LoginUser("test@mail.com", "test")
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = uh.ViewCustomersDetails(-1)
+	if err == nil {
+		t.Error("customer_id = -1 exists?")
+	}
+}

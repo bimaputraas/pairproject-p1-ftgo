@@ -92,7 +92,10 @@ func (cli *Cli) DeleteBeverageInterface() {
 		log.Fatal(err)
 	}
 
-	cli.Handler.DeleteBeveragebyId(askId)
+	err = cli.Handler.DeleteBeveragebyId(askId)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Beverage deleted")
 	cli.MainMenuAdmin()
 }
