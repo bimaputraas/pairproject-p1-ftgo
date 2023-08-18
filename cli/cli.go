@@ -73,6 +73,7 @@ func (cli *Cli) LoginInterface() {
 	// login by admin
 	if askInputEmail == "admin" && askInputPassword == "admin" {
 		cli.MainMenuAdmin()
+		return
 	}
 
 	err := cli.Handler.LoginUser(askInputEmail, askInputPassword)

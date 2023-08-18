@@ -3,7 +3,6 @@ package cli
 import (
 	"fmt"
 	"log"
-	"os"
 	"strconv"
 )
 
@@ -26,8 +25,8 @@ func (cli *Cli) MainMenuAdmin() {
 	case "delete":
 		cli.DeleteBeverageInterface()
 	case "exit":
-		fmt.Printf("\nProgram End, Thanks!\n\n")
-		os.Exit(1)
+		fmt.Printf("\nAdmin access end, Thanks!\n\n")
+		return
 	default:
 		fmt.Printf("Invalid Input\n\n")
 		cli.MainMenuAdmin()
