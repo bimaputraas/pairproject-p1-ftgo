@@ -11,7 +11,7 @@ func main() {
 	defer db.Close()
 
 	userHandler := handler.Handler{UserHandler: db}
-	
+
 	app := cli.Cli{Handler: &userHandler}
 	app.MainGateInterface()
 }

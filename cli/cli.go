@@ -45,8 +45,8 @@ func (cli *Cli) RegisterInterface() {
 	askRegisterPassword := ScanInputString()
 
 	// register handler.
-	
-	RegisteredEmail,err := cli.Handler.RegisterUser(askRegisterEmail, askRegisterPassword)
+
+	RegisteredEmail, err := cli.Handler.RegisterUser(askRegisterEmail, askRegisterPassword)
 	if err != nil {
 		fmt.Println(err)
 		cli.MainGateInterface()
@@ -71,7 +71,7 @@ func (cli *Cli) LoginInterface() {
 	askInputPassword := ScanInputString()
 
 	// login by admin
-	if askInputEmail == "admin" && askInputPassword == "admin"{
+	if askInputEmail == "admin" && askInputPassword == "admin" {
 		cli.MainMenuAdmin()
 	}
 
@@ -226,7 +226,7 @@ func (cli *Cli) OrderInterface(customerId int) {
 			// print bev with string padding
 			if bev.Alcohol && isAdult {
 				fmt.Printf("%-3s %-20s %.2f Alcoholic\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
-			} else {
+			} else if !bev.Alcohol {
 				fmt.Printf("%-3s %-20s %.2f\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
 			}
 		}
@@ -243,8 +243,20 @@ func (cli *Cli) OrderInterface(customerId int) {
 			fmt.Println("Beverage not found")
 			continue
 		}
+		var quantity int
+		for {
+			fmt.Println("How many would you like to buy?")
+			quantity, err = strconv.Atoi(ScanInputString())
+			if err != nil {
+				panic(err)
+			}
+			if quantity > 0 {
+				break
+			}
+		}
+		fmt.Println("Invalid quantity")
 		fmt.Println("How many would you like to buy?")
-		quantity, err := strconv.Atoi(ScanInputString())
+		quantity, err = strconv.Atoi(ScanInputString())
 		if err != nil {
 			panic(err)
 		}
