@@ -17,6 +17,7 @@ func (cli *Cli) MainGateInterface() {
 	fmt.Println("[COMMAND]			-DESCRIPTION")
 	fmt.Println("[login]				-login")
 	fmt.Println("[register]			-register")
+	fmt.Println("[exit]				-exit")
 	fmt.Printf("\nEnter your command : ")
 
 	askInputGate := ScanInputString()
@@ -26,6 +27,9 @@ func (cli *Cli) MainGateInterface() {
 		cli.LoginInterface()
 	case "register":
 		cli.RegisterInterface()
+	case "exit":
+		fmt.Printf("\nProgram End, Thanks!\n\n")
+		return
 	default:
 		fmt.Printf("Invalid Input\n\n")
 		cli.MainGateInterface()
@@ -87,6 +91,7 @@ func (cli *Cli) MainMenuInterface(customerId int) {
 	fmt.Println("[COMMAND]			-DESCRIPTION")
 	fmt.Println("[profile]			-User Profile")
 	fmt.Println("[order]				-Create a new order")
+	fmt.Println("[exit]				-exit program")
 	fmt.Printf("\nEnter your command : ")
 
 	askInputMain := ScanInputString()
@@ -96,9 +101,11 @@ func (cli *Cli) MainMenuInterface(customerId int) {
 		cli.UserProfileInterface(customerId)
 	case "order":
 		cli.OrderInterface(customerId)
-	default:
-		fmt.Printf("\nProgram end, thanks!\n\n")
+	case "exit":
+		fmt.Printf("\nProgram End, Thanks!\n\n")
 		return
+	default:
+		cli.MainMenuInterface(customerId)
 	}
 }
 

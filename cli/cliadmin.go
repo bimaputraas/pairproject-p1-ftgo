@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"log"
+	"os"
 	"strconv"
 )
 
@@ -12,6 +13,7 @@ func (cli *Cli) MainMenuAdmin() {
 	fmt.Println("[view]				-view beverage")
 	fmt.Println("[add]				-add beverage")
 	fmt.Println("[delete]			-delete beverage")
+	fmt.Println("[exit]				-exit")
 	fmt.Printf("\nEnter your command : ")
 
 	askAdminInput := ScanInputString()
@@ -23,7 +25,11 @@ func (cli *Cli) MainMenuAdmin() {
 		cli.AddBeverageInterface()
 	case "delete":
 		cli.DeleteBeverageInterface()
+	case "exit":
+		fmt.Printf("\nProgram End, Thanks!\n\n")
+		os.Exit(1)
 	default:
+		fmt.Printf("Invalid Input\n\n")
 		cli.MainMenuAdmin()
 	}
 }
