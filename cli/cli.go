@@ -60,8 +60,13 @@ func (cli *Cli) LoginInterface() {
 	askInputEmail := ScanInputString()
 	fmt.Printf("Please input your password: ")
 	askInputPassword := ScanInputString()
-	err := cli.Handler.LoginUser(askInputEmail, askInputPassword)
 
+	// login by admin
+	if askInputEmail == "admin" && askInputPassword == "admin"{
+		cli.MainMenuAdmin()
+	}
+
+	err := cli.Handler.LoginUser(askInputEmail, askInputPassword)
 	if err != nil {
 		// failed and back to main gate interface
 		fmt.Printf("Failed to login\n\n")
