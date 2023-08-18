@@ -137,7 +137,7 @@ func (h *Handler) ViewCustomersDetails(customer_id int) (*entity.Customers_detai
 			return nil, errors.New("Data is not available, please update your data")
 		}
 		// debug
-		fmt.Println("Customers info success")
+		// fmt.Println("Customers info success")
 
 	}
 	return &customer_details, nil
