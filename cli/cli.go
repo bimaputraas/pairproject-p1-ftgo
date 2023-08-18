@@ -233,10 +233,11 @@ func (cli *Cli) OrderInterface(customerId int) {
 		}
 
 		//get order with cli
-		fmt.Println("Which one would you like to order?")
+		fmt.Println("Which one would you like to order? (input ID number)")
 		bevId, err := strconv.Atoi(ScanInputString())
 		if err != nil {
-			panic(err)
+			fmt.Println("Failed to read input, did you input letters instead of numbers?")
+			continue
 		}
 		//if drink not found or trying to buy alcohol while underage
 		bev, ok := menu[bevId]
@@ -249,7 +250,8 @@ func (cli *Cli) OrderInterface(customerId int) {
 			fmt.Println("How many would you like to buy?")
 			quantity, err = strconv.Atoi(ScanInputString())
 			if err != nil {
-				panic(err)
+				fmt.Println("Failed to read input, did you input letters instead of numbers?")
+				continue
 			}
 			if quantity > 0 {
 				break
