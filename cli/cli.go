@@ -45,7 +45,12 @@ func (cli *Cli) RegisterInterface() {
 	askRegisterPassword := ScanInputString()
 
 	// register handler.
-	RegisteredEmail := cli.Handler.RegisterUser(askRegisterEmail, askRegisterPassword)
+	
+	RegisteredEmail,err := cli.Handler.RegisterUser(askRegisterEmail, askRegisterPassword)
+	if err != nil {
+		fmt.Println(err)
+		cli.MainGateInterface()
+	}
 
 	// handler, select id customer by their email, return id customer
 	customerId := cli.Handler.SelectByEmail(askRegisterEmail)
@@ -66,7 +71,7 @@ func (cli *Cli) LoginInterface() {
 	askInputPassword := ScanInputString()
 
 	// login by admin
-	if askInputEmail == "admin" && askInputPassword == "admin" {
+	if askInputEmail == "admin" && askInputPassword == "admin"{
 		cli.MainMenuAdmin()
 	}
 
@@ -87,6 +92,8 @@ func (cli *Cli) LoginInterface() {
 // after login
 func (cli *Cli) MainMenuInterface(customerId int) {
 	// emailCustomer = email dari user yg berhasil login
+	// os clear
+
 	fmt.Printf("\nWelcome to main menu!\n\n")
 	fmt.Println("[COMMAND]			-DESCRIPTION")
 	fmt.Println("[profile]			-User Profile")
@@ -214,13 +221,13 @@ func (cli *Cli) OrderInterface(customerId int) {
 	}
 	for {
 		//show menu
-		fmt.Println("ID  Name                Price")
+		println("ID  Name                Price")
 		for _, bev := range menu {
 			// print bev with string padding
 			if bev.Alcohol && isAdult {
-				fmt.Printf("%-3s %-20s %-7s Alcoholic\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price))
-			} else if !bev.Alcohol {
-				fmt.Printf("%-3s %-20s %-7s\n", fmt.Sprint(bev.Id), bev.Name, fmt.Sprintf("%.2f", bev.Price))
+				fmt.Printf("%-3s %-20s %.2f Alcoholic\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
+			} else {
+				fmt.Printf("%-3s %-20s %.2f\n", fmt.Sprint(bev.Id), bev.Name, bev.Price)
 			}
 		}
 
@@ -236,17 +243,10 @@ func (cli *Cli) OrderInterface(customerId int) {
 			fmt.Println("Beverage not found")
 			continue
 		}
-		var quantity int
-		for {
-			fmt.Println("How many would you like to buy?")
-			quantity, err = strconv.Atoi(ScanInputString())
-			if err != nil {
-				panic(err)
-			}
-			if quantity > 0 {
-				break
-			}
-			fmt.Println("Invalid quantity")
+		fmt.Println("How many would you like to buy?")
+		quantity, err := strconv.Atoi(ScanInputString())
+		if err != nil {
+			panic(err)
 		}
 		total += bev.Price * float64(quantity)
 		fmt.Printf("Current total = $%.2f\n", total)
